@@ -21,6 +21,7 @@ export type SocialIcons = {
 
 export type SocialMedia =
   | "Github"
+  | "Tryhackme"
   | "Facebook"
   | "Instagram"
   | "LinkedIn"
