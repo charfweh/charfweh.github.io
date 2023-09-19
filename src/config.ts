@@ -5,9 +5,9 @@ export const SITE: Site = {
   author: "Affan Ansari",
   desc: "Infosec | Code | Writeups",
   title: "Char's Blog",
-  ogImage: "astropaper-og.jpg",
+  ogImage: "background.jpg",
   lightAndDarkMode: true,
-  postPerPage: 3,
+  postPerPage: 5,
 };
 
 export const LOCALE = ["en-EN"]; // set to [] to use the environment default
