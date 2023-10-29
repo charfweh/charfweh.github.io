@@ -15,12 +15,13 @@ export default defineConfig({
       },
     }),
     react(),
-    sitemap(),
     partytown({
       config: {
         forward: ["dataLayer.push"],
       },
-    }),
+}),
+    sitemap(),
+    
   ],
   markdown: {
     remarkPlugins: [
