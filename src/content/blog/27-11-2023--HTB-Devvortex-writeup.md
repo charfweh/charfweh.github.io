@@ -1,6 +1,6 @@
 ---
 author: NotCare
-pubDatetime: 2023-11-27T12:18:00Z
+pubDatetime: 2023-11-27T13:00:00Z
 title: HTB - Devvortex Writeup
 postSlug: htb-writeup
 featured: true
