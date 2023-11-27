@@ -174,8 +174,6 @@ now lets get a revshell
 - visit `http://dev.devvortex.htb/templates/cassiopeia/error.php` after starting a listener `nc -lvnp 9001`
 - we get a shell as `www-data`
 
-(Easy/Devvortext/initial foothol)initial foothold]]
-
 # www-data
 
 - from /etc/passwd we find `root,logan` are user accounts with bash
