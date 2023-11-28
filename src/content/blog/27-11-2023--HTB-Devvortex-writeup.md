@@ -20,6 +20,10 @@ Machine OS: Linux<br>
 
 Devvortex is a linux machine about enumerating the subdomain to find out its running joomla, then after we do light enumeration to find its information disclosure vulnerability in one of its /api/ function which leads us to joomla admin username,password. As admin we upload our reverse shell then we log in as www-data, from then on we use mysql creds to crack hashes for another user. As that user we take advantage of misconfigured and vulnerable `apport-cli` binary to privesc to root. Lets get into it!
 
+# Kill Chain
+
+![image](/assets/htb-devvortex/test1.png)
+
 # Recon
 
 We start off with nmap to look for open ports<br>
