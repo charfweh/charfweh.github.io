@@ -1,5 +1,3 @@
-User-agent: Googlebot
-Disallow: /nogooglebot/
-
 User-agent: *
 Allow: /
+Sitemap: https://charfweh.github.io/sitemap-0.xml
