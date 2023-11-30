@@ -23,6 +23,8 @@ _SQL truncation is a flaw in the database configuration in which an input is tru
 
 Let's get started!
 
+# Table of Contents
+
 # Lab Guide
 
 Follow along the guide on my github to setup the lab and deploy the app.

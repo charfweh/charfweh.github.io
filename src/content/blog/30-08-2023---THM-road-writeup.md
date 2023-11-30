@@ -17,7 +17,9 @@ description: Inspired by real world pentensting engagement
 real world pentesting engagement, the room is all about web server compromise of admin account by resetting the password and gaining initial access. The privesc vector is about internal database services and envrionment variable<br>
 before any further ado, lets jump in!
 
-## Recon
+# Table of Contents
+
+# Recon
 
 As always, we'll start off with nmap as our initial reconn to see what ports are open
 
@@ -25,7 +27,7 @@ As always, we'll start off with nmap as our initial reconn to see what ports are
 sudo nmap -sC -sV -oN road.nmap [IP)
 ```
 
-### nmap
+## nmap
 
 ![Test](/assets/road_ss/nmap.png)
 
@@ -35,13 +37,13 @@ sudo nmap -sC -sV -oN road.nmap [IP)
 
 ## Enumeration
 
-### webserver (port 80)
+## webserver (port 80)
 
 Let's check the website
 ![Test](/assets/road_ss/website.png)
 Lets run gobuster to enumerate directories
 
-#### gobuster
+## gobuster
 
 ```bash
 gobuster dir -w /usr/share/seclists/Discovery/Web-Content/raft-medium-directories.txt -u http://10.10.165.32/ -o road.gobuster -x html,js
@@ -51,14 +53,14 @@ gobuster dir -w /usr/share/seclists/Discovery/Web-Content/raft-medium-directorie
 
 Several interesting directories, lets check phpMyAdmin
 
-#### phpmyadmin
+## phpmyadmin
 
 ![Test](/assets/road_ss/phpmyadmin.png)
 
 - Default creds dont work
 - The error appends `localhost` maybe its exposed to localhost only?
 
-#### back to the website
+## back to the website
 
 Track order doesnt work
 ![Test](/assets/road_ss/trackoder.png)
@@ -66,7 +68,7 @@ Track order doesnt work
 Scrolling down the page we see a domain `skycouriers.thm` we add that to our etc/hosts
 Now, lets check what the merchant page is about.
 
-#### merchant page
+## merchant page
 
 ![Test](/assets/road_ss/register.png)
 we registered with a sample email and logging in we are presented with a merchant dashboard, out of which only edit profile and reset password works
@@ -94,7 +96,7 @@ then i went to see the source code and we see a comment linking to a `profileima
 ![Test](/assets/road_ss/sourcecode.png)
 so we now know where the image is going, lets upload a reverse shell and get our initial foothold, since its an admin account there's no validation whether its an image or php application.
 
-## Initial foothold
+# Initial foothold
 
 uploading a simple php reverse shell and navigating to /v2/profileimages/{revshell}.php we get a shell
 ![Test](/assets/road_ss/revshell.png)
@@ -114,14 +116,14 @@ there are two users, now remember phpmyadmin? it errored out saying cant connect
 
 - now out of these ports 3306 and 33060 is for mysql and 27017 is mongodb
 
-#### mysql
+## mysql
 
 lets try mysql command line
 ![Test](/assets/road_ss/mysql.png)
 
 - tried a couple of things but it didnt work
 
-#### mongo
+## mongo
 
 - lets try mongodb command line
   ![Test](/assets/road_ss/mongodb.png)
@@ -137,7 +139,7 @@ lets ssh in with webdeveloper
 ![Test](/assets/road_ss/webdev.png)
 and we get user.txt
 
-#### Bonus
+## Bonus
 
 Remember mysql? in `lostpassword.php` theres user:pass for mysql and we can use it connect and get the password of `admin@sky.thm`
 
@@ -146,14 +148,14 @@ Remember mysql? in `lostpassword.php` theres user:pass for mysql and we can use 
 Lets select everything from `Users` table
 ![Test](/assets/road_ss/myqsl3.png)
 
-## Privesc
+# Privesc
 
 Usually, my first step for escalating privilege is to check sudo permission, we can do that using <br> `sudo -l` gives us
 ![Test](/assets/road_ss/privesc.png)
 
 interesting bit here is the `LD_PRELOAD` and binary `/usr/bin/sky_backup_utility`
 
-#### LD_PRELOAD overview
+## LD_PRELOAD overview
 
 ```markdown
 The **_LD_PRELOAD_ trick is a useful technique to influence the linkage of shared libraries and the resolution of symbols (functions) at runtime.** To explain _LD_PRELOAD_, let’s first discuss a bit about libraries in the Linux system.
@@ -165,7 +167,7 @@ Using static libraries, we can build standalone programs. On the other hand, pro
 
 so basically, its loading any linker/loader `.so` that is available before executing the backup
 
-#### LD_PRELOAD privesc
+## LD_PRELOAD privesc
 
 - going to /tmp and saving our exploit
   ![Test](/assets/road_ss/exploit.png)
@@ -174,9 +176,9 @@ so basically, its loading any linker/loader `.so` that is available before execu
 - run it
   ![Test](/assets/road_ss/root.png)
 
-## Beyond root
+# Beyond root
 
-### Source Code analysis
+## Source Code analysis
 
 - Admin Password Change vulnerability
   Looking at `lostpassword.php` we see where the flaw is.
@@ -230,7 +232,7 @@ Again, theres no sanization and validation whatsover, it doesnt check if its an 
 
 Thanks for reading!
 
-## reference links
+# reference links
 
 - https://systemweakness.com/linux-privilege-escalation-with-ld-preload-sudo-a13e0b755ede
 - https://www.hackingarticles.in/linux-privilege-escalation-using-ld_preload/
