@@ -2,12 +2,14 @@
 author: NotCare
 pubDatetime: 2023-11-27T13:00:00Z
 title: HTB - Devvortex Writeup
-postSlug: htb-writeup
+postSlug: htb-devvortex-writeup
 featured: true
 draft: false
 tags:
   - htb
   - writeup
+  - hackthebox
+  - devvortex
 ogImage: ""
 description: All about enumeration to information disclousure to RCE
 ---
